@@ -43,7 +43,7 @@ jobs:
         id: pythonKafkaClientRelease
         uses: pozetroninc/github-action-get-latest-release@v0.8.0
         with:
-          repository: kroxylicious/python-kafka-client
+          repository: kroxylicious/python-kafka-test-client
       - name: 'Determine Version'
         id: confluentKafkaPythonVersion
         run: |
