@@ -15,7 +15,10 @@ import inspect
 def get_value_from_type(obj):
     value_str = obj
     if isinstance(obj, bytes):
-        value_str = obj.decode("utf-8")
+        try:
+            value_str = obj.decode("utf-8")
+        except UnicodeDecodeError:
+            value_str = "".join(map(chr, obj))
     if isinstance(obj, list):
         value_str = [get_value_from_type(x) for x in obj]
     if isinstance(obj, tuple):
