@@ -62,7 +62,7 @@ jobs:
           REPO_RELEASE=${{ steps.pythonKafkaClientRelease.outputs.release }}
           echo "RELEASE_VERSION=${REPO_RELEASE}" >> $GITHUB_ENV
       - name: 'Check out repository from latest tag'
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ env.RELEASE_VERSION }}
           fetch-depth: 0
