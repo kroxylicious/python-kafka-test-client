@@ -31,6 +31,7 @@ def main(args):
     def delivery_callback(err, msg):
         if err:
             sys.stderr.write('%% Record failed delivery: %s\n' % err)
+            sys.exit(1)
         else:
             print('Record {} successfully produced to {} [{}] at offset {}'.format(
                 msg.key(), msg.topic(), msg.partition(), msg.offset()))
