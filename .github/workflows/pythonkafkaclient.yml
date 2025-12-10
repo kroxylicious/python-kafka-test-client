@@ -34,7 +34,7 @@ jobs:
     steps:
       - name: 'Get latest librdkafka version used'
         run: |
-          TAG=$(curl -H "Authorization: Bearer XYZ" -X GET "https://${{vars.REGISTRY_SERVER}}/api/v1/repository/${{REGISTRY_ORGANISATION}}/python-kafka-test-client/tag/" | jq .tags[].name | head -1 | sed -e 's|\"||g')
+          TAG=$(curl -H "Authorization: Bearer XYZ" -X GET "https://${{vars.REGISTRY_SERVER}}/api/v1/repository/${{vars.REGISTRY_ORGANISATION}}/python-kafka-test-client/tag/" | jq .tags[].name | head -1 | sed -e 's|\"||g')
           arrTag=(${TAG//-/ })
           echo "${arrTag[1]}"
           echo "LIBRDKAFKA_VERSION=${arrTag[1]}" >> $GITHUB_ENV
