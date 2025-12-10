@@ -32,6 +32,11 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ vars.REGISTRY_SERVER != '' && vars.REGISTRY_USERNAME != '' }}
     steps:
+      - name: 'Get latest release version of this repository'
+        id: pythonKafkaClientRelease
+        uses: pozetroninc/github-action-get-latest-release@v0.8.0
+        with:
+          repository: kroxylicious/python-kafka-test-client
       - name: 'Get latest librdkafka version used'
         run: |
           TAG=$(curl -H "Authorization: Bearer XYZ" -X GET "https://${{vars.REGISTRY_SERVER}}/api/v1/repository/${{vars.REGISTRY_ORGANISATION}}/python-kafka-test-client/tag/" | jq .tags[].name | head -1 | sed -e 's|\"||g')
