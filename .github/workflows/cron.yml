@@ -77,7 +77,7 @@ jobs:
           username: ${{ vars.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_TOKEN }}
       - name: 'Build and push python kafka client container image'
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           build-args: LIBRDKAFKA_VERSION=${{env.LIBRDKAFKA_VERSION}}
