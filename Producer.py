@@ -7,6 +7,7 @@
 from confluent_kafka import Producer
 import argparse
 import sys
+import logging
 
 def main(args):
     broker = args.bootstrap_servers
@@ -22,8 +23,18 @@ def main(args):
     extra_configuration = [x[0].split('=') for x in vargs.get('extra_conf', [])]
     producer_conf.update(dict(extra_configuration))
 
+    # Create logger for producer (logs are emitted when poll()/flush() is called).
+    # This surfaces librdkafka broker/connection/SASL errors that would otherwise
+    # be invisible when a produce fails to reach the cluster.
+    logger = logging.getLogger('producer')
+    logger.setLevel(logging.DEBUG)
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter('%(asctime)-15s %(levelname)-8s %(message)s'))
+    logger.addHandler(handler)
+
     # Create Producer instance
-    p = Producer(**producer_conf)
+    # Hint: try debug='broker,security' to generate more log records
+    p = Producer(producer_conf, logger=logger)
 
     # Optional per-record delivery callback (triggered by poll() or flush())
     # when a record has been successfully delivered or permanently
